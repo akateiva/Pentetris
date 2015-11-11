@@ -82,8 +82,13 @@ public class GameStateGame extends GameState{
 					m_activePentomino.setX(m_activePentomino.getX() + 1);
 				}
 				break;
-			case DOWN: case ENTER:
+			case DOWN:
 				Pentetris.forceThink();
+				break;
+			case ENTER:
+				if(m_finished){
+					Pentetris.startMenu();
+				}
 				break;
 			default:
 
@@ -138,13 +143,26 @@ public class GameStateGame extends GameState{
 			for(int j = 0; j < 5; j++){
 				g.setColor(m_nextPentomino.getColor());
 				if(m_nextPentomino.getMatrix()[i][j] != 0){
-					g.fillRect(75 + j*10, 100+i*10, 10, 10);
+					g.fillRect(75 + j*10, 75+i*10, 10, 10);
 				}
 				g.setColor(Color.BLACK);
 			}
 		}
 		//Draw the score
 		g.drawString("SCORE: " + m_score, 75, 50);
+
+		//draw the game over text
+		if(m_finished) {
+			Font newFont = g.getFont().deriveFont(g.getFont().getSize() * 4f);
+			g.setFont(newFont);
+
+			g.drawString("GAME OVER", 300, 200);
+			newFont = g.getFont().deriveFont(g.getFont().getSize() * 0.5f);
+			g.setFont(newFont);
+			g.drawString("YOUR SCORE: " + m_score, 300, 250);
+
+			g.drawString("press enter to return to the menu", 300, 300);
+		}
 	}
 
 }

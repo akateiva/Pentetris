@@ -47,6 +47,9 @@ public class Pentetris {
         m_gamePanel.revalidate();
         m_gamePanel.repaint();
     }
+    public static void startMenu(){
+        m_gameState =  new GameStateMenu();
+    }
     public static void startGame(int difficulty){
         m_gameState = new GameStateGame(difficulty);
         switch(difficulty){
