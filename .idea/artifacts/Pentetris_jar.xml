@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Pentetris:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Pentetris_jar</output-path>
+    <root id="archive" name="Pentetris.jar">
+      <element id="module-output" name="Pentetris" />
+    </root>
+  </artifact>
+</component>

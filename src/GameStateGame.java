@@ -7,7 +7,7 @@ public class GameStateGame extends GameState{
 	int m_difficulty;
 
 	final int m_boardWidth = 10;
-	final int m_boardHeigth = 20;
+	final int m_boardHeigth = 22;
 	int m_board[][];
 
 	boolean m_finished;
@@ -55,11 +55,8 @@ public class GameStateGame extends GameState{
 		Pentomino tmp;
 		Random ran = new Random();
 		tmp = new Pentomino(ran.nextInt(12), ran.nextBoolean());
-		tmp.setX(3);
+		tmp.setX(4);
 		tmp.setY(0);
-		if(!tmp.fits(m_board, tmp.getX(), tmp.getY())){
-			gameOver();
-		}
 		return tmp;
 	}
 	public void onEvent(EventType e){
@@ -104,26 +101,27 @@ public class GameStateGame extends GameState{
 			if(!m_finished){
 				m_activePentomino = m_nextPentomino;
 				m_nextPentomino = randomPentomino();
+				if(!m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY())){
+					gameOver();
+				}
 			}
 		}
 		checkLines();
 		Pentetris.revalidate();
 	}
 	public void paint(Graphics g){
-		final int startX = 0;
-		final int startY = 0;
 		final int cellSize = 25;
 
 		//Draw the board with locked-in pentominoes
 		for(int i = 0; i != m_boardHeigth; i++){
 			for(int j = 0; j != m_boardWidth; j++){
-				g.drawRect(250 + j*cellSize, i*cellSize, cellSize, cellSize);
+				g.drawRect(250 + j*cellSize, i*cellSize - 50, cellSize, cellSize);
 				if(m_board[i][j] != 0){
 					g.setColor(new Color(m_board[i][j]));
 				}else{
 					g.setColor(Color.WHITE);
 				}
-				g.fillRect(250 + j*cellSize, i*cellSize, cellSize, cellSize);
+				g.fillRect(250 + j*cellSize, i*cellSize - 50, cellSize, cellSize);
 				g.setColor(Color.BLACK);
 			}
 		}
@@ -132,7 +130,7 @@ public class GameStateGame extends GameState{
 			for(int j = 0; j < 5; j++){
 				g.setColor(m_activePentomino.getColor());
 				if(m_activePentomino.getMatrix()[i][j] != 0){
-					g.fillRect(250 + j*cellSize + m_activePentomino.getX()*cellSize, i*cellSize + m_activePentomino.getY()*cellSize, cellSize, cellSize);
+					g.fillRect(250 + j*cellSize + m_activePentomino.getX()*cellSize, i*cellSize + m_activePentomino.getY()*cellSize - 50, cellSize, cellSize);
 				}
 				g.setColor(Color.BLACK);
 			}
