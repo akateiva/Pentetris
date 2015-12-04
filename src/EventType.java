@@ -6,5 +6,6 @@ public enum EventType{
 	RIGHT,
 	UP,
 	DOWN,
-	ENTER
+	ENTER,
+	SPACE
 }

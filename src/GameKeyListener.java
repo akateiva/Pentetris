@@ -28,6 +28,9 @@ public class GameKeyListener implements KeyListener {
 			case KeyEvent.VK_ENTER:
 				Pentetris.onEvent(EventType.ENTER);
 				break;
+			case KeyEvent.VK_SPACE:
+				Pentetris.onEvent(EventType.SPACE);
+				break;
 		}
 	}
 

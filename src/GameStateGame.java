@@ -67,13 +67,19 @@ public class GameStateGame extends GameState{
 
 		switch(e){
 			case UP:
-				m_gameBoard.rotateActive();
+				if(!m_finished) {
+					m_gameBoard.rotateActive();
+				}
 				break;
 			case LEFT:
-				m_gameBoard.moveActiveLeft();
+				if(!m_finished) {
+					m_gameBoard.moveActiveLeft();
+				}
 				break;
 			case RIGHT:
-				m_gameBoard.moveActiveRight();
+				if(!m_finished) {
+					m_gameBoard.moveActiveRight();
+				}
 				break;
 			case DOWN:
 				Pentetris.forceThink();
@@ -81,6 +87,12 @@ public class GameStateGame extends GameState{
 			case ENTER:
 				if(m_finished){
 					Pentetris.startMenu();
+				}
+				break;
+			case SPACE:
+				if(!m_finished) {
+					m_gameBoard.dropActive();
+					Pentetris.forceThink();
 				}
 				break;
 			default:
@@ -94,14 +106,21 @@ public class GameStateGame extends GameState{
 	 * This is called by the application at a fixed interval ( determined by the difficulty that was selected.
 	 */
 	public void onThink(){
-		m_gameBoard.onThink();
+		if(!m_finished) {
+			m_gameBoard.onThink();
+		}
 
 		//Check if the nextPentomino has been used
 		if(m_gameBoard.getNextPentomino() == null){
 			//If the board has locked in the active pentomino update our record and generate the nextPentomino
 			m_activePentomino = m_nextPentomino;
+			//Check if it fits
+			if(!m_activePentomino.fits(m_gameBoard.getBoardMatrix(), m_activePentomino.getX(), m_activePentomino.getY())){
+				gameOver();
+			}
 			m_nextPentomino = randomPentomino();
 			m_gameBoard.setNextPentomino(m_nextPentomino);
+
 		}
 		Pentetris.revalidate();
 	}

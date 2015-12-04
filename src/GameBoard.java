@@ -36,6 +36,11 @@ public class GameBoard {
         return m_board;
     }
 
+    public float computeHeuristic() {
+
+        return 1337;
+    }
+
     /**
      * Moves the active pentomino left by 1 cell, but only if the new position will fit.
      */
@@ -55,6 +60,18 @@ public class GameBoard {
     }
 
     /**
+     * Moves the pentomino down by 1 cell only if it fits.
+     * @return true if it was possible to move the pentomino; false if the move could not be fitted.
+     */
+    public boolean moveActiveDown(){
+        if(m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY() + 1)){
+            m_activePentomino.setY(m_activePentomino.getY() + 1);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Rotates the active pentomino clockwise only if it will fit within the board.
      *
      * The method rotates the pentomino clockwise, then checks if it does fit. If it doesn't, it reverts the pentomino back.
@@ -66,13 +83,16 @@ public class GameBoard {
         }
     }
 
+    public void dropActive(){
+        while(moveActiveDown()){}
+    }
+
+
     /**
      * Performs one move down as well as checking for any cleared lines
      */
     public void onThink(){
-        if(m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY() + 1)){
-            m_activePentomino.setY(m_activePentomino.getY() + 1);
-        }else{
+        if(!moveActiveDown()){
             m_activePentomino.insert(m_board);
             m_activePentomino = m_nextPentomino;
             m_nextPentomino = null;
