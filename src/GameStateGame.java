@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
@@ -9,8 +8,8 @@ public class GameStateGame extends GameState{
 	int m_difficulty;
 
 	final int m_boardWidth = 10;
-	final int m_boardHeigth = 22;
-	int m_board[][];
+	final int m_boardHeight = 22;
+	GameBoard m_gameBoard;
 
 	boolean m_finished;
 	int m_score;
@@ -27,9 +26,13 @@ public class GameStateGame extends GameState{
 		m_score = 0;
 		m_difficulty = difficulty;
 		m_finished = false;
-		m_board = new int[m_boardHeigth][m_boardWidth];
+
 		m_nextPentomino = randomPentomino();
 		m_activePentomino = randomPentomino();
+
+		m_gameBoard = new GameBoard(m_boardWidth, m_boardHeight);
+		m_gameBoard.setNextPentomino(m_nextPentomino);
+		m_gameBoard.setActivePentomino(m_activePentomino);
 	}
 
 	/**
@@ -37,43 +40,6 @@ public class GameStateGame extends GameState{
 	 */
 	private void gameOver(){
 		m_finished = true;
-	}
-
-	/**
-	 * @param line The number of the line within the board
-	 * @return True if the given line is filled, false if its not
-     */
-	private boolean lineFilled(int line){
-		for(int i = 0; i < m_boardWidth; i++){
-			if(m_board[line][i] == 0){
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Removes the given line from the board and updates the score
-	 * @param line The number of the line within the board
-     */
-	private void clearLine(int line){
-		m_score++;
-		for(int i = line; i > 0; i--){
-			System.arraycopy(m_board, i-1, m_board, i, 1);
-		}
-		m_board[0] = new int[m_boardWidth];
-	}
-
-	/**
-	 * This method checks all rows from top to bottom looking for filled lines and clearing them
-	 */
-	private void checkLines(){
-		//go thru all possible rows from top to bottom
-		for(int i = 0; i < m_boardHeigth; i++){
-			if(lineFilled(i)){
-				clearLine(i);
-			}
-		}
 	}
 
 	/**
@@ -101,20 +67,13 @@ public class GameStateGame extends GameState{
 
 		switch(e){
 			case UP:
-				m_activePentomino.rotateCW();
-				if(!m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY())){
-					m_activePentomino.rotateCCW();
-				}
+				m_gameBoard.rotateActive();
 				break;
 			case LEFT:
-				if(m_activePentomino.getX() - 1 >= 0 && m_activePentomino.fits(m_board, m_activePentomino.getX() - 1, m_activePentomino.getY())){
-					m_activePentomino.setX(m_activePentomino.getX() - 1);
-				}
+				m_gameBoard.moveActiveLeft();
 				break;
 			case RIGHT:
-				if(m_activePentomino.fits(m_board, m_activePentomino.getX() + 1, m_activePentomino.getY())){
-					m_activePentomino.setX(m_activePentomino.getX() + 1);
-				}
+				m_gameBoard.moveActiveRight();
 				break;
 			case DOWN:
 				Pentetris.forceThink();
@@ -135,19 +94,15 @@ public class GameStateGame extends GameState{
 	 * This is called by the application at a fixed interval ( determined by the difficulty that was selected.
 	 */
 	public void onThink(){
-		if(m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY() + 1)){
-			m_activePentomino.setY(m_activePentomino.getY() + 1);
-		}else{
-			m_activePentomino.insert(m_board);
-			if(!m_finished){
-				m_activePentomino = m_nextPentomino;
-				m_nextPentomino = randomPentomino();
-				if(!m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY())){
-					gameOver();
-				}
-			}
+		m_gameBoard.onThink();
+
+		//Check if the nextPentomino has been used
+		if(m_gameBoard.getNextPentomino() == null){
+			//If the board has locked in the active pentomino update our record and generate the nextPentomino
+			m_activePentomino = m_nextPentomino;
+			m_nextPentomino = randomPentomino();
+			m_gameBoard.setNextPentomino(m_nextPentomino);
 		}
-		checkLines();
 		Pentetris.revalidate();
 	}
 
@@ -158,8 +113,11 @@ public class GameStateGame extends GameState{
 	public void paint(Graphics g){
 		final int cellSize = 25;
 
+		//TODO: FIX THE M_. M_BOARD IS NOT A MEMBER VARIABLE!!
+		//TODO: maybe even move this whole thing to DrawHelper
+		int[][] m_board = m_gameBoard.getBoardMatrix();
 		//Draw the board with locked-in pentominoes
-		for(int i = 0; i != m_boardHeigth; i++){
+		for(int i = 0; i != m_boardHeight; i++){
 			for(int j = 0; j != m_boardWidth; j++){
 				g.drawRect(250 + j*cellSize, i*cellSize - 50, cellSize, cellSize);
 				if(m_board[i][j] != 0){
