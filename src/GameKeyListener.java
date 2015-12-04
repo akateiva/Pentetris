@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+/**
+ * Listen to events and pass them to the GameStates when appropriate
+ */
 public class GameKeyListener implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {

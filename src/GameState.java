@@ -1,18 +1,33 @@
 import javax.swing.*;
 import java.awt.*;
-//this is as abstract as a class can get. usually games have very different states
-//IE the menu screen, the loading screen and the game screen itself
-//each game state is responsible for itself, that is handling the events and drawing schtuff on screen
+
+/**
+ * Abstract class onto which GameState s are built
+ */
 public class GameState{
 	public GameState(){
-		//Pretty much do nothing
+
 	}
+
+	/**
+	 * Every time an event is detected, this is called
+	 * @param e EventType
+     */
 	public void onEvent(EventType e){
-		//Here we poll the events ( key presses, etc.)
+
 	}
+
+	/**
+	 * This is called by the internal timer that is determined by tge selected difficulty
+	 */
 	public void onThink(){
-		//this is probably obsolete
+
 	}
+
+	/**
+	 * This is called every time the screen has to be updated
+	 * @param g The graphics object
+     */
 	public void paint(Graphics g){
 
 	}

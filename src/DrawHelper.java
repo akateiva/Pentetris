@@ -2,8 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-public class DrawHelper {
+/**
+ * Simplifies some of the drawing tasks
+ */
 
+public class DrawHelper {
+    /**
+     * A method to draw center-aligned strings simple and easy
+     * @param g        The graphics object
+     * @param string   String to be drawn
+     * @param x        X position of the string's center
+     * @param y        Y position of the string
+     * @param size     Font size
+     */
     public static void drawString(Graphics g, String string, int x, int y, float size){
 
         g.setColor(Color.BLACK);
@@ -16,6 +27,15 @@ public class DrawHelper {
 
         g.setFont(oldFont);
     }
+
+    /**
+     * A method to draw Pentomino objects on the screen
+     * @param g         The graphics object
+     * @param pentomino The pentomino object
+     * @param x         X position of where the pentomino has to be drawn
+     * @param y         Y position of where the pentomino has to be drawn
+     * @param cellSize  Size of each pentomino's square
+     */
     public static void drawPentomino(Graphics g, Pentomino pentomino, int x, int y, int cellSize){
         for(int i = 0; i < 5; i ++){
             for(int j = 0; j < 5; j++){

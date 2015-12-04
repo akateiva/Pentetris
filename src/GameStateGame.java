@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-
+/**
+ * This high-level class handles most of the game code
+ */
 public class GameStateGame extends GameState{
 	int m_difficulty;
 
@@ -17,6 +19,10 @@ public class GameStateGame extends GameState{
 	Pentomino m_nextPentomino;
 	Pentomino m_activePentomino;
 
+	/**
+	 * Initializes the gamestate
+	 * @param difficulty The difficulty that was selected in the menu
+     */
 	public GameStateGame(int difficulty) {
 		m_score = 0;
 		m_difficulty = difficulty;
@@ -26,9 +32,17 @@ public class GameStateGame extends GameState{
 		m_activePentomino = randomPentomino();
 	}
 
+	/**
+	 * Whenever the game ending condition has been detected, this is called
+	 */
 	private void gameOver(){
 		m_finished = true;
 	}
+
+	/**
+	 * @param line The number of the line within the board
+	 * @return True if the given line is filled, false if its not
+     */
 	private boolean lineFilled(int line){
 		for(int i = 0; i < m_boardWidth; i++){
 			if(m_board[line][i] == 0){
@@ -37,6 +51,11 @@ public class GameStateGame extends GameState{
 		}
 		return true;
 	}
+
+	/**
+	 * Removes the given line from the board and updates the score
+	 * @param line The number of the line within the board
+     */
 	private void clearLine(int line){
 		m_score++;
 		for(int i = line; i > 0; i--){
@@ -44,6 +63,10 @@ public class GameStateGame extends GameState{
 		}
 		m_board[0] = new int[m_boardWidth];
 	}
+
+	/**
+	 * This method checks all rows from top to bottom looking for filled lines and clearing them
+	 */
 	private void checkLines(){
 		//go thru all possible rows from top to bottom
 		for(int i = 0; i < m_boardHeigth; i++){
@@ -52,6 +75,11 @@ public class GameStateGame extends GameState{
 			}
 		}
 	}
+
+	/**
+	 * Generates a random pentomino
+	 * @return Pentomino
+     */
 	private Pentomino randomPentomino(){
 		Pentomino tmp;
 		Random ran = new Random();
@@ -60,6 +88,12 @@ public class GameStateGame extends GameState{
 		tmp.setY(0);
 		return tmp;
 	}
+
+	/**
+	 * Every event that has been detected will be passed to this method
+	 * @param e The type of key press
+	 * @see EventType
+     */
 	public void onEvent(EventType e){
 		//if the difficulty is AI, ignore player input
 		if(m_difficulty == -1)
@@ -67,7 +101,6 @@ public class GameStateGame extends GameState{
 
 		switch(e){
 			case UP:
-				//attempt to fit it in
 				m_activePentomino.rotateCW();
 				if(!m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY())){
 					m_activePentomino.rotateCCW();
@@ -79,7 +112,6 @@ public class GameStateGame extends GameState{
 				}
 				break;
 			case RIGHT:
-				//try fitting it
 				if(m_activePentomino.fits(m_board, m_activePentomino.getX() + 1, m_activePentomino.getY())){
 					m_activePentomino.setX(m_activePentomino.getX() + 1);
 				}
@@ -98,6 +130,10 @@ public class GameStateGame extends GameState{
 		}
 		Pentetris.revalidate();
 	}
+
+	/**
+	 * This is called by the application at a fixed interval ( determined by the difficulty that was selected.
+	 */
 	public void onThink(){
 		if(m_activePentomino.fits(m_board, m_activePentomino.getX(), m_activePentomino.getY() + 1)){
 			m_activePentomino.setY(m_activePentomino.getY() + 1);
@@ -114,6 +150,11 @@ public class GameStateGame extends GameState{
 		checkLines();
 		Pentetris.revalidate();
 	}
+
+	/**
+	 * Every time something is changed on screen, this is called to re-draw the graphics
+	 * @param g	The graphics object
+     */
 	public void paint(Graphics g){
 		final int cellSize = 25;
 

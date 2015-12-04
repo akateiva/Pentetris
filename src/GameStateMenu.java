@@ -1,7 +1,9 @@
 import java.awt.*;
 import java.util.*;
-//this is the menu gamestate. the user selects the difficulty using arrow keys, and once done presses RETURN
-//we draw stuff accordingly on the screen. this is as simple as it gets.
+
+/**
+ * This class handles the starting screen, during which the player chooses his difficulty or whether he wants to see the bot play
+ */
 public class GameStateMenu extends GameState{
 	Deque<String> m_difficulties;
 	public GameStateMenu(){

@@ -1,6 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+/**
+ * Instead of drawing directly on the JFrame, we draw on a JPanel
+ */
 class GamePanel extends JPanel {
 
     public GamePanel() {

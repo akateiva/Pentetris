@@ -8,22 +8,45 @@ public class Pentomino{
 	private int m_x;
 	private int m_y;
 
+	/**
+	 * @return The color of this pentomino
+     */
 	public Color getColor(){
 		return m_color;
 	}
 
+	/**
+	 * @return The x position of the pentomino within the board
+     */
 	public int getX(){
 		return m_x;
 	}
+
+	/**
+	 * Sets x position of the pentomino of the board
+	 * @param x The x position of the pentomino of the board
+     */
 	public void setX(int x){
 		m_x = x;
 	}
+	/**
+	 * @return The y position of the pentomino within the board
+	 */
 	public int getY(){
 		return m_y;
 	}
+
+	/**
+	 * Sets y position of the pentomino of the board
+	 * @param y The x position of the pentomino of the board
+	 */
 	public void setY(int y){
 		m_y = y;
 	}
+
+	/**
+	 * @return int[][] matrix of this pentomino
+     */
 	public int[][] getMatrix(){
 		return m_matrix;
 	}
