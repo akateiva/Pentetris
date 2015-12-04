@@ -73,4 +73,9 @@ public class Pentetris {
         }
         forceThink();
     }
+    public static void startSimulation(){
+        m_timerDelay = 100;
+        m_gameState = new GameStateSimulation();
+        forceThink();
+    }
 }

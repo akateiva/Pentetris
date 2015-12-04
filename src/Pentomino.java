@@ -105,7 +105,7 @@ public class Pentomino{
 		fixOrigin();
 	}
 
-	private void flip(){
+	public void flip(){
 		int[][] tmp = new int[MATRIX_SIZE][MATRIX_SIZE];
 		
 		for (int i = 0; i < MATRIX_SIZE; i++){

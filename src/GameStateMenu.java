@@ -7,12 +7,13 @@ import java.util.*;
 public class GameStateMenu extends GameState{
 	Deque<String> m_difficulties;
 	public GameStateMenu(){
-		m_difficulties = new LinkedList<String>();
+		m_difficulties = new LinkedList<>();
 		m_difficulties.add("Easy");
 		m_difficulties.add("Medium");
 		m_difficulties.add("Hard");
 		m_difficulties.add("Insane");
 		m_difficulties.add("AI");
+		m_difficulties.add("Simulation");
 	}
 	public void onEvent(EventType e){
 		switch(e){
@@ -23,23 +24,26 @@ public class GameStateMenu extends GameState{
 				m_difficulties.addLast(m_difficulties.removeFirst());
 				break;
 			case ENTER:
-					switch(m_difficulties.getFirst()){
-						case "Easy":
-							Pentetris.startGame(0);
-							break;
-						case "Medium":
-							Pentetris.startGame(1);
-							break;
-						case "Hard":
-							Pentetris.startGame(2);
-							break;
-						case "Insane":
-							Pentetris.startGame(3);
-							break;
-						case "AI":
-							Pentetris.startGame(-1);
-							break;
-					}
+				switch(m_difficulties.getFirst()){
+					case "Easy":
+						Pentetris.startGame(0);
+						break;
+					case "Medium":
+						Pentetris.startGame(1);
+						break;
+					case "Hard":
+						Pentetris.startGame(2);
+						break;
+					case "Insane":
+						Pentetris.startGame(3);
+						break;
+					case "AI":
+						Pentetris.startGame(-1);
+						break;
+					case "Simulation":
+						Pentetris.startSimulation();
+						break;
+				}
 				break;
 			default:
 
