@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 //this is the menu gamestate. the user selects the difficulty using arrow keys, and once done presses RETURN
@@ -11,6 +10,7 @@ public class GameStateMenu extends GameState{
 		m_difficulties.add("Medium");
 		m_difficulties.add("Hard");
 		m_difficulties.add("Insane");
+		m_difficulties.add("AI");
 	}
 	public void onEvent(EventType e){
 		switch(e){
@@ -34,6 +34,9 @@ public class GameStateMenu extends GameState{
 						case "Insane":
 							Pentetris.startGame(3);
 							break;
+						case "AI":
+							Pentetris.startGame(-1);
+							break;
 					}
 				break;
 			default:
@@ -45,23 +48,15 @@ public class GameStateMenu extends GameState{
 		Pentetris.revalidate();
 	}
 	public void onThink(){
-		//For this game this is where the logic happens
 
 	}
 	public void paint(Graphics g){
-        g.drawString("(Use arrow keys to choose your difficulty. RETURN to start.)",100,350);
 
-        g.setColor(Color.BLACK);
+		DrawHelper.drawString(g, "PENTETRIS", 375, 100, 4);
+		DrawHelper.drawString(g, "MODE:", 375, 150, 2);
+		DrawHelper.drawString(g, m_difficulties.getFirst(), 375, 200, 2);
+		DrawHelper.drawString(g, "(Use arrow keys to choose your difficulty. RETURN to start.)", 375, 350, 1);
 
- 
-        Font newFont = g.getFont().deriveFont(g.getFont().getSize() * 3f);
-        g.setFont(newFont);
-
-        g.drawString("PENTETRIS",100,100);//hope this does not slip through to the final release and presentation lol
-
-        g.drawString("DIFFICULTY:",100,150);
-
-        g.drawString(m_difficulties.getFirst(),100,200);
 	}
 
 

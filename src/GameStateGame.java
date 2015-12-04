@@ -25,6 +25,7 @@ public class GameStateGame extends GameState{
 		m_nextPentomino = randomPentomino();
 		m_activePentomino = randomPentomino();
 	}
+
 	private void gameOver(){
 		m_finished = true;
 	}
@@ -60,6 +61,10 @@ public class GameStateGame extends GameState{
 		return tmp;
 	}
 	public void onEvent(EventType e){
+		//if the difficulty is AI, ignore player input
+		if(m_difficulty == -1)
+			return;
+
 		switch(e){
 			case UP:
 				//attempt to fit it in
@@ -125,41 +130,21 @@ public class GameStateGame extends GameState{
 				g.setColor(Color.BLACK);
 			}
 		}
-		//Draw the active pentomino
-		for(int i = 0; i < 5; i ++){
-			for(int j = 0; j < 5; j++){
-				g.setColor(m_activePentomino.getColor());
-				if(m_activePentomino.getMatrix()[i][j] != 0){
-					g.fillRect(250 + j*cellSize + m_activePentomino.getX()*cellSize, i*cellSize + m_activePentomino.getY()*cellSize - 50, cellSize, cellSize);
-				}
-				g.setColor(Color.BLACK);
-			}
-		}
-		//Draw the next pentomino
-		g.drawString("NEXT PENTOMINO:", 75, 75);
-		for(int i = 0; i < 5; i ++){
-			for(int j = 0; j < 5; j++){
-				g.setColor(m_nextPentomino.getColor());
-				if(m_nextPentomino.getMatrix()[i][j] != 0){
-					g.fillRect(75 + j*10, 75+i*10, 10, 10);
-				}
-				g.setColor(Color.BLACK);
-			}
-		}
-		//Draw the score
-		g.drawString("SCORE: " + m_score, 75, 50);
 
-		//draw the game over text
+
+		DrawHelper.drawPentomino(g, m_activePentomino, 250 + m_activePentomino.getX()*cellSize, 0 + m_activePentomino.getY()*cellSize, cellSize);
+
+		DrawHelper.drawString(g, "SCORE: " + m_score, 125, 150, 3);
+
+		DrawHelper.drawString(g, "NEXT PENTOMINO", 125, 200, 1);
+		DrawHelper.drawPentomino(g, m_nextPentomino, 100, 275, 10);
+
 		if(m_finished) {
-			Font newFont = g.getFont().deriveFont(g.getFont().getSize() * 4f);
-			g.setFont(newFont);
-
-			g.drawString("GAME OVER", 300, 200);
-			newFont = g.getFont().deriveFont(g.getFont().getSize() * 0.5f);
-			g.setFont(newFont);
-			g.drawString("YOUR SCORE: " + m_score, 300, 250);
-
-			g.drawString("press enter to return to the menu", 300, 300);
+			g.setColor(new Color(255, 255, 255, 200));
+			g.fillRect(0, 0, 750, 500);
+			DrawHelper.drawString(g, "GAME OVER", 375, 200, 4);
+			DrawHelper.drawString(g, "YOUR SCORE: " + m_score, 375, 250, 2);
+			DrawHelper.drawString(g, "press enter to return to the menu", 375, 300, 2);
 		}
 	}
 

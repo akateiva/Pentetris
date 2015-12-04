@@ -53,6 +53,11 @@ public class Pentetris {
     public static void startGame(int difficulty){
         m_gameState = new GameStateGame(difficulty);
         switch(difficulty){
+            case -1:
+                //bad workaround to push AI in
+                m_timerDelay = 100000;
+                return;
+
             case 0:
                 m_timerDelay = 500;
             break;
