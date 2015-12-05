@@ -96,8 +96,11 @@ public class GameBoard{
         return 0;
     }
     public float computeHeuristic() {
-        //Get the peak height of the placed pentominos
+
+
         int height = 0;
+        /*
+        //Peak height computing
         for(int i = m_boardHeight-1; i >= 0; i--){
             for(int j = 0; j < m_boardWidth; j++){
                 if(m_board[i][j] != 0){
@@ -105,6 +108,11 @@ public class GameBoard{
                     break;
                 }
             }
+        }
+        */
+        //Total height computing ( seems to work better )
+        for(int i = 0; i < m_boardWidth; i++){
+            height += getColumnHeight(i);
         }
         //Compute how many holes exist
         int holes = 0;
@@ -128,7 +136,7 @@ public class GameBoard{
             bumpiness += Math.abs(getColumnHeight(i) - getColumnHeight(i+1));
         }
         //TODO: FINE-TUNE THE MULTIPLIERS
-        return (float)0.76*lines + -0.8f*holes + -0.51f*height + -0.5f*bumpiness;
+        return 0.5f*lines + -0.35f*holes + -0.51f*height + -0.4f*bumpiness;
     }
 
     /**

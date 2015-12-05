@@ -122,6 +122,9 @@ public class GameStateGame extends GameState{
 				}
 			}
 		}
+		if(!mostRational.isValid()){
+			gameOver();
+		}
 		mostRational.checkLines();
 		m_gameBoard = mostRational;
 	}
