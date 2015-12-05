@@ -13,6 +13,8 @@ public class GameStateGame extends GameState{
 
 	boolean m_finished;
 
+	RandomGenerator m_generator;
+
 	Pentomino m_nextPentomino;
 	Pentomino m_activePentomino;
 
@@ -24,8 +26,10 @@ public class GameStateGame extends GameState{
 		m_difficulty = difficulty;
 		m_finished = false;
 
-		m_nextPentomino = randomPentomino();
-		m_activePentomino = randomPentomino();
+		m_generator = new RandomGenerator();
+
+		m_nextPentomino = m_generator.draw();
+		m_activePentomino = m_generator.draw();
 
 		m_gameBoard = new GameBoard(m_boardWidth, m_boardHeight);
 		m_gameBoard.setNextPentomino(m_nextPentomino);
@@ -38,19 +42,6 @@ public class GameStateGame extends GameState{
 	 */
 	private void gameOver(){
 		m_finished = true;
-	}
-
-	/**
-	 * Generates a random pentomino
-	 * @return Pentomino
-     */
-	private Pentomino randomPentomino(){
-		Pentomino tmp;
-		Random ran = new Random();
-		tmp = new Pentomino(ran.nextInt(12), ran.nextBoolean());
-		tmp.setX(4);
-		tmp.setY(0);
-		return tmp;
 	}
 
 	/**
@@ -188,8 +179,8 @@ public class GameStateGame extends GameState{
 	public void onThink(){
 		if(m_difficulty == -1 && !m_finished){
 			AILoop();
-			m_activePentomino = randomPentomino();
-			m_nextPentomino = randomPentomino();
+			m_activePentomino = m_generator.draw();
+			m_nextPentomino = m_generator.draw();
 			m_gameBoard.setActivePentomino(m_activePentomino);
 			m_gameBoard.setNextPentomino(m_nextPentomino);
 			if(!m_activePentomino.fits(m_gameBoard.getBoardMatrix(), m_activePentomino.getX(), m_activePentomino.getY())){
@@ -211,7 +202,7 @@ public class GameStateGame extends GameState{
 			if(!m_activePentomino.fits(m_gameBoard.getBoardMatrix(), m_activePentomino.getX(), m_activePentomino.getY())){
 				gameOver();
 			}
-			m_nextPentomino = randomPentomino();
+			m_nextPentomino =  m_generator.draw();
 			m_gameBoard.setNextPentomino(m_nextPentomino);
 
 		}
