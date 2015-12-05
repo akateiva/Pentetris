@@ -1,8 +1,9 @@
-public class GameBoard {
+public class GameBoard{
     private int[][] m_board;
     private int m_boardWidth;
     private int m_boardHeight;
-
+    private boolean m_valid = true;
+    private int m_score = 0;
 
     private Pentomino m_activePentomino;
     private Pentomino m_nextPentomino;
@@ -11,6 +12,19 @@ public class GameBoard {
         m_board = new int[height][width];
         m_boardWidth = width;
         m_boardHeight = height;
+
+    }
+
+    public boolean isValid(){
+        return m_valid;
+    }
+
+    public void invalidate(){
+        m_valid = false;
+    }
+
+    public int getScore() {
+        return m_score;
     }
 
     public Pentomino getActivePentomino() {
@@ -29,6 +43,28 @@ public class GameBoard {
         this.m_nextPentomino = NextPentomino;
     }
 
+    public GameBoard deepCopy(){
+        GameBoard copy = new GameBoard(m_boardWidth, m_boardHeight);
+
+        //Retrieve the address of the copy's matrix, then copy the contents of this over to the copy
+        //NOTE: Since the matrix is a 2-dimensional array and we want to perform a deep-copy we must copy each row (otherwise you'll be copying addresses)
+        int[][] copy_matrix = copy.getBoardMatrix();
+        for(int i = 0; i < m_boardHeight; i++) {
+            System.arraycopy(m_board[i], 0, copy_matrix[i], 0, m_board[i].length);
+        }
+
+        //Create copies of the pentomino objects
+        Pentomino activePentomino = m_activePentomino.deepCopy();
+        Pentomino nextPentomino = m_nextPentomino.deepCopy();
+
+        copy.setActivePentomino(activePentomino);
+        copy.setNextPentomino(nextPentomino);
+        copy.m_score = m_score;
+
+        return copy;
+
+    }
+
     /**
      * @return int[][] matrix of the board
      */
@@ -36,9 +72,62 @@ public class GameBoard {
         return m_board;
     }
 
-    public float computeHeuristic() {
 
-        return 1337;
+    private boolean isCovered(int x, int y){
+        for(int i = y-1; i >= 0; i--){
+            if(m_board[i][x] != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Computes various heuristics of the current locked-in board layout
+     * @return the heuristic value
+     */
+    private int getColumnHeight(int x) {
+        for(int i = 0; i < m_boardHeight; i++) {
+            if(m_board[i][x] != 0){
+                return m_boardHeight-i;
+            }
+        }
+        return 0;
+    }
+    public float computeHeuristic() {
+        //Get the peak height of the placed pentominos
+        int height = 0;
+        for(int i = m_boardHeight-1; i >= 0; i--){
+            for(int j = 0; j < m_boardWidth; j++){
+                if(m_board[i][j] != 0){
+                    height++;
+                    break;
+                }
+            }
+        }
+        //Compute how many holes exist
+        int holes = 0;
+        for(int i = 0; i < m_boardWidth; i++){
+            for(int j = 1; j < m_boardHeight; j++){
+                if(isCovered(i,j) && m_board[j][i] == 0){
+                    holes++;
+                }
+            }
+        }
+        //Compute complete lines
+        int lines = 0;
+        for(int i = 0; i < m_boardHeight; i++){
+            if(lineFilled(i)) {
+                lines++;
+            }
+        }
+        //Compute the bumpiness ( the sum of all slopes )
+        int bumpiness = 0;
+        for(int i = 0; i < m_boardWidth-1; i++){
+            bumpiness += Math.abs(getColumnHeight(i) - getColumnHeight(i+1));
+        }
+        //TODO: FINE-TUNE THE MULTIPLIERS
+        return 70*lines - 150*holes - 40*height - 15*bumpiness;
     }
 
     /**
@@ -83,19 +172,27 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Drops the active pentomino
+     */
     public void dropActive(){
         while(moveActiveDown()){}
     }
 
+    public void insertActive(){
+        m_activePentomino.insert(m_board);
+        if(m_nextPentomino != null){
+            m_activePentomino = m_nextPentomino;
+            m_nextPentomino = null;
+        }
+    }
 
     /**
      * Performs one move down as well as checking for any cleared lines
      */
     public void onThink(){
         if(!moveActiveDown()){
-            m_activePentomino.insert(m_board);
-            m_activePentomino = m_nextPentomino;
-            m_nextPentomino = null;
+            insertActive();
         }
         checkLines();
     }
@@ -119,6 +216,7 @@ public class GameBoard {
      * @param line The number of the line within the board
      */
     private void clearLine(int line){
+        m_score++;
         for(int i = line; i > 0; i--){
             System.arraycopy(m_board, i-1, m_board, i, 1);
         }
@@ -128,7 +226,7 @@ public class GameBoard {
     /**
      * This method checks all rows from top to bottom looking for filled lines and clearing them
      */
-    private void checkLines() {
+    public void checkLines() {
         //go thru all possible rows from top to bottom
         for (int i = 0; i < m_boardHeight; i++) {
             if (lineFilled(i)) {

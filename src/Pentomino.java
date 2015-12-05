@@ -59,6 +59,10 @@ public class Pentomino{
 		return tmp;
 	}
 
+	public Pentomino deepCopy(){
+		Pentomino copy = new Pentomino(m_matrix, m_color, m_x, m_y);
+		return copy;
+	}
 	private boolean arrayEmpty(int[] row){
 		for(int i = 0; i != row.length; i++){
 			if (row[i] != 0) {
@@ -129,7 +133,16 @@ public class Pentomino{
 		rotate();
 	}
 
-	
+	private Pentomino(int[][] matrix, java.awt.Color color, int x, int y){
+		m_matrix = new int[matrix.length][matrix[0].length];
+		for(int i = 0; i < MATRIX_SIZE; i++){
+			System.arraycopy(matrix[i], 0, m_matrix[i], 0, m_matrix[i].length);
+		}
+
+		m_color = color;
+		m_x = x;
+		m_y = y;
+	}
 
 	Pentomino(int type, boolean flipped){
 

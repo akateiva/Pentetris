@@ -54,22 +54,20 @@ public class Pentetris {
         m_gameState = new GameStateGame(difficulty);
         switch(difficulty){
             case -1:
-                //bad workaround to push AI in
-                m_timerDelay = 100000;
-                return;
-
+                m_timerDelay = 100;
+                break;
             case 0:
                 m_timerDelay = 500;
-            break;
+                break;
             case 1:
                 m_timerDelay = 300;
-            break;
+                break;
             case 2:
                 m_timerDelay = 200;
-            break;
+                break;
             case 3:
                 m_timerDelay = 100;
-            break;
+                break;
         }
         forceThink();
     }
