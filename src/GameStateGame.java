@@ -90,6 +90,9 @@ public class GameStateGame extends GameState{
 								//Drop the active pentomino and lock it in
 								candidates[i][j][k][l].dropActive();
 								candidates[i][j][k][l].insertActive();
+								int scoreBeforeCheckingLines = candidates[i][j][k][l].getScore();
+								candidates[i][j][k][l].checkLines();
+								candidates[i][j][k][l].m_scoreDelta = candidates[i][j][k][l].getScore() - scoreBeforeCheckingLines;
 
 								//By now the activePentomino has changed to the one that has been assigned as next
 								//Drop the active pentomino and lock it in

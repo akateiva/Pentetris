@@ -4,6 +4,7 @@ public class GameBoard{
     private int m_boardHeight;
     private boolean m_valid = true;
     private int m_score = 0;
+    public int m_scoreDelta = 0; //used by the bot. not well understood.
 
     private Pentomino m_activePentomino;
     private Pentomino m_nextPentomino;
@@ -115,7 +116,7 @@ public class GameBoard{
             }
         }
         //Compute complete lines
-        int lines = 0;
+        int lines = m_scoreDelta;
         for(int i = 0; i < m_boardHeight; i++){
             if(lineFilled(i)) {
                 lines++;
@@ -127,7 +128,7 @@ public class GameBoard{
             bumpiness += Math.abs(getColumnHeight(i) - getColumnHeight(i+1));
         }
         //TODO: FINE-TUNE THE MULTIPLIERS
-        return 70*lines - 150*holes - 40*height - 15*bumpiness;
+        return (float)0.76*lines + -0.8f*holes + -0.51f*height + -0.5f*bumpiness;
     }
 
     /**
