@@ -127,7 +127,7 @@ public class GameStateSimulation extends GameState{
 		}
 		//P
 		if(counter==7){
-			tmp = new Pentomino(7,false);
+			tmp = new Pentomino(1,false);
 			counter++;
 			tmp.setX(0);
 			tmp.setY(0);
@@ -135,7 +135,7 @@ public class GameStateSimulation extends GameState{
 		}
 		//I
 		if(counter==8){
-			tmp = new Pentomino(1,false);
+			tmp = new Pentomino(7,false);
 			counter++;
 			tmp.setX(0);
 			tmp.setY(0);
