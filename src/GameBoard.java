@@ -136,7 +136,7 @@ public class GameBoard{
             bumpiness += Math.abs(getColumnHeight(i) - getColumnHeight(i+1));
         }
         //TODO: FINE-TUNE THE MULTIPLIERS
-        return 0.5f*lines + -0.35f*holes + -0.51f*height + -0.4f*bumpiness;
+        return 0.76f*lines + -0.35f*holes + -0.51f*height + -0.18f*bumpiness;
     }
 
     /**

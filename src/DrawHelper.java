@@ -17,7 +17,21 @@ public class DrawHelper {
      */
     public static void drawString(Graphics g, String string, int x, int y, float size){
 
-        g.setColor(Color.BLACK);
+        drawString(g, string, x, y, size, Color.BLACK);
+    }
+
+    /**
+     * A method to draw center-aligned strings simple and easy ( + color! )
+     * @param g        The graphics object
+     * @param string   String to be drawn
+     * @param x        X position of the string's center
+     * @param y        Y position of the string
+     * @param size     Font size
+     * @param color    The color of the text
+     */
+    public static void drawString(Graphics g, String string, int x, int y, float size, java.awt.Color color){
+
+        g.setColor(color);
         Font oldFont = g.getFont();
         Font newFont = g.getFont().deriveFont(oldFont.getSize() * size);
         g.setFont(newFont);
@@ -26,6 +40,9 @@ public class DrawHelper {
         g.drawString(string, x - strlen/2, y);
 
         g.setFont(oldFont);
+        
+        //set the color back to black
+        g.setColor(Color.BLACK);
     }
 
     /**
@@ -47,4 +64,5 @@ public class DrawHelper {
             }
         }
     }
+
 }

@@ -54,7 +54,7 @@ public class Pentetris {
         m_gameState = new GameStateGame(difficulty);
         switch(difficulty){
             case -1:
-                m_timerDelay = 100;
+                m_timerDelay = 250;
                 break;
             case 0:
                 m_timerDelay = 500;

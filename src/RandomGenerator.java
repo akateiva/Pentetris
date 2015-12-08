@@ -35,7 +35,9 @@ public class RandomGenerator {
             unusedTypes.add(i);
         }
         for(int i = 0; i < 12; i++){
-            m_bag.add(new Pentomino(unusedTypes.remove(m_random.nextInt(unusedTypes.size())), m_random.nextBoolean()));
+            Pentomino newPentomino = new Pentomino(unusedTypes.remove(m_random.nextInt(unusedTypes.size())), m_random.nextBoolean());
+            newPentomino.setX(3);
+            m_bag.add(newPentomino);
         }
 
     }
