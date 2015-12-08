@@ -14,6 +14,7 @@ public class GameStateSimulation extends GameState{
 	static int counter = 0;
 	int movementsX = 0;
 	int movementsY = 0;
+	int m_multiplier;
 
 
 	boolean m_finished;
@@ -45,7 +46,6 @@ public class GameStateSimulation extends GameState{
 		return true;
 	}
 	private void clearLine(int line){
-		m_score++;
 		for(int i = line; i > 0; i--){
 			System.arraycopy(m_board, i-1, m_board, i, 1);
 		}
@@ -55,9 +55,14 @@ public class GameStateSimulation extends GameState{
 		//go thru all possible rows from top to bottom
 		for(int i = 0; i < m_boardHeigth; i++){
 			if(lineFilled(i)){
-				clearLine(i);
+				clearLine(i);	
+				m_multiplier++;
 			}
 		}
+		if (m_multiplier>0) {
+			m_score += 1 + ((m_multiplier-1) * 2);
+		}
+		m_multiplier = 0;
 	}
 
 	

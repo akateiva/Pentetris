@@ -5,6 +5,7 @@ public class GameBoard{
     private boolean m_valid = true;
     private int m_score = 0;
     public int m_scoreDelta = 0; //used by the bot. not well understood.
+    int m_multiplier;
 
     private Pentomino m_activePentomino;
     private Pentomino m_nextPentomino;
@@ -225,7 +226,6 @@ public class GameBoard{
      * @param line The number of the line within the board
      */
     private void clearLine(int line){
-        m_score++;
         for(int i = line; i > 0; i--){
             System.arraycopy(m_board, i-1, m_board, i, 1);
         }
@@ -240,7 +240,12 @@ public class GameBoard{
         for (int i = 0; i < m_boardHeight; i++) {
             if (lineFilled(i)) {
                 clearLine(i);
+                m_multiplier++;
             }
         }
+        if (m_multiplier>0) {
+        	m_score += 1 + ((m_multiplier-1)*2);
+        }
+        m_multiplier = 0;
     }
 }
