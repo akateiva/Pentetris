@@ -65,6 +65,17 @@ public class GameStateSimulation extends GameState{
 		m_multiplier = 0;
 	}
 
+	public void onEvent(EventType e){
+		switch(e){
+			case ENTER:
+				Pentetris.startMenu();
+				break;
+			default:
+
+				break;
+		}
+		Pentetris.revalidate();
+	}
 	
 	private Pentomino nextPentomino(){
 		Pentomino tmp = new Pentomino(4,false);
