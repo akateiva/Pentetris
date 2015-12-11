@@ -1,3 +1,19 @@
+/**
+ * Authors: Kalli Buchanan
+ *		   Kamil Bujnarowski
+ *		   Aleksas Kateiva
+ *		   Daniel Mihăltan
+ *		   Alexander Steckelberg
+ *		   Carla Wrede
+ *
+ * Version: 6
+ * 
+ * Date:    8 December 2015
+ *
+ * Summary: 
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 

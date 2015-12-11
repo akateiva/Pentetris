@@ -1,9 +1,22 @@
+/**
+ * Authors: Kalli Buchanan
+ *		   Kamil Bujnarowski
+ *		   Aleksas Kateiva
+ *		   Daniel Mihăltan
+ *		   Alexander Steckelberg
+ *		   Carla Wrede
+ *
+ * Version: 11
+ * 
+ * Date:    5 December 2015
+ *
+ * Summary: This high-level class handles most of the game code
+ *
+ */
+
 import java.awt.*;
 import java.util.*;
 
-/**
- * This high-level class handles most of the game code
- */
 public class GameStateGame extends GameState{
 	int m_difficulty;
 

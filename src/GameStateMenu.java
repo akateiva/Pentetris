@@ -1,9 +1,22 @@
+/**
+* Authors: Kalli Buchanan
+*		   Kamil Bujnarowski
+*		   Aleksas Kateiva
+*		   Daniel Mihăltan
+*		   Alexander Steckelberg
+*		   Carla Wrede
+*
+* Version: 5
+* 
+* Date:    8 December 2015
+*
+* Summary: This class handles the starting screen, during which the player choose his difficulty or whethere he wants to see the bot play or the simulation
+*
+*/
+
 import java.awt.*;
 import java.util.*;
 
-/**
- * This class handles the starting screen, during which the player chooses his difficulty or whether he wants to see the bot play
- */
 public class GameStateMenu extends GameState{
 	LinkedList<String> m_menuOptions;
 	int m_menuCursor;

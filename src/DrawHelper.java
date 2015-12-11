@@ -1,10 +1,21 @@
+/**
+* Authors: Kalli Buchanan
+*		   Kamil Bujnarowski
+*		   Aleksas Kateiva
+*		   Daniel Mihăltan
+*		   Alexander Steckelberg
+*		   Carla Wrede
+*
+* Version: 2
+* 
+* Date:    8 December 2015
+*
+* Summary: Simplifies some of the drawing tasks.
+*
+*/
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
-
-/**
- * Simplifies some of the drawing tasks
- */
 
 public class DrawHelper {
     /**

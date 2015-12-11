@@ -1,10 +1,24 @@
+/**
+ * Authors: Kalli Buchanan
+ *		   Kamil Bujnarowski
+ *		   Aleksas Kateiva
+ *		   Daniel Mihăltan
+ *		   Alexander Steckelberg
+ *		   Carla Wrede
+ *
+ * Version: 3
+ * 
+ * Date:    5 December 2015
+ *
+ * Summary: Listen to events and pass them to the GameStates when appropriate
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * Listen to events and pass them to the GameStates when appropriate
- */
+
 public class GameKeyListener implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {

@@ -1,3 +1,19 @@
+/**
+ * Authors: Kalli Buchanan
+ *		   Kamil Bujnarowski
+ *		   Aleksas Kateiva
+ *		   Daniel Mihăltan
+ *		   Alexander Steckelberg
+ *		   Carla Wrede
+ *
+ * Version: 4
+ * 
+ * Date:    10 December 2015
+ *
+ * Summary: This class runs the simulation of the optimal score
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;

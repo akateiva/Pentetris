@@ -1,3 +1,18 @@
+/**
+ * Authors: Kalli Buchanan
+ *		   Kamil Bujnarowski
+ *		   Aleksas Kateiva
+ *		   Daniel Mihăltan
+ *		   Alexander Steckelberg
+ *		   Carla Wrede
+ *
+ * Version: 8
+ * 
+ * Date:    8 December 2015
+ *
+ * Summary: This class creates the board used by the game loop
+ *
+ */
 public class GameBoard{
     private int[][] m_board;
     private int m_boardWidth;

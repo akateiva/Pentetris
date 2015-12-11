@@ -1,9 +1,22 @@
+/**
+ * Authors: Kalli Buchanan
+ *		   Kamil Bujnarowski
+ *		   Aleksas Kateiva
+ *		   Daniel Mihăltan
+ *		   Alexander Steckelberg
+ *		   Carla Wrede
+ *
+ * Version: 2
+ * 
+ * Date:    4 December 2015
+ *
+ * Summary: Abstract clas onto which GameStates are built
+ *
+ */
+
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Abstract class onto which GameState s are built
- */
 public class GameState{
 	public GameState(){
 
